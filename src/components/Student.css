@@ -1,0 +1,27 @@
+.student-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f4f4f4;
+  border-bottom: 1px solid #ccc;
+  margin: 5px;
+  font-family: Arial, sans-serif;
+}
+
+.student-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.student-email {
+  font-size: 14px;
+  color: #666;
+}
+
+.details-icon {
+  font-size: 20px;
+  color: #333;
+}
