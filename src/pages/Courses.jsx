@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Course from "../components/Course";
-import coursesData from "../utils/MOCK_DATA.json";
+import coursesData from "../utils/COURSES_DATA_MOCK";
 import "./Courses.css";
 
 const Courses = () => {
@@ -9,7 +9,7 @@ const Courses = () => {
     setCourses(coursesData);
   }, []);
   return (
-    <div className="flex">
+    <div className="flex-row">
       {courses.length &&
         courses.map((course) => <Course key={course.id} course={course} />)}
     </div>

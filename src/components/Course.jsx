@@ -1,5 +1,6 @@
 import React from "react";
 import "./Course.css";
+import { Link } from "react-router-dom";
 
 const Course = ({ course }) => {
   return (
@@ -8,7 +9,9 @@ const Course = ({ course }) => {
       <p className="course-description">{course.description}</p>
       <p className="course-instructor">Instructor: {course.instructor}</p>
       <p className="course-location">Location: {course.location}</p>
-      <button className="course-button">Details</button>
+      <Link to={"/courses/" + course.id}>
+        <button className="course-button">Details </button>
+      </Link>
     </div>
   );
 };

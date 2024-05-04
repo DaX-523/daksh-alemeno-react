@@ -1,5 +1,5 @@
 import React from "react";
-import "./Student.css"; // Importing the CSS for styling
+import "./Student.css";
 
 const StudentInfo = ({ name, email }) => {
   return (

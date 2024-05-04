@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import studentData from "../utils/MOCK_DATA (1).json";
+import studentData from "../utils/STUDENT_DATA_MOCK";
 import StudentInfo from "../components/Student";
-import "./Dashboard.css";
+import "./StudentList.css";
+import { Link } from "react-router-dom";
 
-const Dashboard = () => {
+const StudentList = () => {
   const [students, setStudents] = useState([]);
   useEffect(() => {
     setStudents(studentData);
@@ -11,18 +12,16 @@ const Dashboard = () => {
   return (
     <div>
       <h1 className="heading">All registered Students</h1>
-      <div className="flex">
+      <div className="flex-col">
         {students.length &&
           students.map((student) => (
-            <StudentInfo
-              key={student.id}
-              name={student.name}
-              email={student.email}
-            />
+            <Link to={"/student-dashboard/" + student.id} key={student.id}>
+              <StudentInfo name={student.name} email={student.email} />
+            </Link>
           ))}
       </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default StudentList;
