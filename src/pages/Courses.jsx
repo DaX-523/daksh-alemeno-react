@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
-import Course from "../components/Course";
-import coursesData from "../utils/COURSES_DATA_MOCK";
+import { Course } from "../components/Course";
 import "./Courses.css";
+import { useSelector } from "react-redux";
 
 const Courses = () => {
-  const [courses, setCourses] = useState([]);
-  useEffect(() => {
-    setCourses(coursesData);
-  }, []);
+  const courses = useSelector((store) => store?.appSlice?.courses);
+
+  if (!courses) return null;
   return (
     <div className="flex-row">
       {courses.length &&

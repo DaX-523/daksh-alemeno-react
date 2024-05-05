@@ -1,24 +1,30 @@
-import React, { useEffect, useState } from "react";
-import Course from "../components/Course";
-import coursesData from "../utils/COURSES_DATA_MOCK";
+import React, { useEffect } from "react";
+import { EnhancedCourse } from "../components/Course";
+
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import studentsData from "../utils/STUDENT_DATA_MOCK";
+import STUDENT_DATA_MOCK from "../utils/STUDENT_DATA_MOCK";
+import { setStudent, setStudentCourses } from "../store/slices/studentSlice";
+import coursesData from "../utils/COURSES_DATA_MOCK";
 
 const StudentDashboard = () => {
-  const [courses, setCourses] = useState([]);
-  const [studentName, setStudentName] = useState("");
+  const courses = useSelector((store) => store?.studentSlice?.courses);
+
+  const dispatch = useDispatch();
+
   const { studentId } = useParams();
+  const student = STUDENT_DATA_MOCK.find((e) => {
+    return e.id === +studentId;
+  });
   useEffect(() => {
-    const currentStudentName = studentsData.find(
-      (student) => student.id === +studentId
-    );
-    setStudentName(currentStudentName.name);
+    dispatch(setStudent(student));
     const enrolledCourses = coursesData.filter((course) =>
-      course.students.find((student) => student.id === +studentId)
+      course.students.find((s) => s.id === +student.id)
     );
-    setCourses(enrolledCourses);
-  }, []);
-  if (!courses.length)
+    dispatch(setStudentCourses(enrolledCourses));
+  }, [dispatch, student]);
+
+  if (!courses)
     return (
       <div>
         <h1 className="heading">Student enrolled in no course.</h1>
@@ -26,11 +32,22 @@ const StudentDashboard = () => {
     );
   return (
     <div>
-      <h1 className="heading">Hi {studentName}</h1>
+      <h1 className="heading">Hi {student.name}</h1>
       <h1 className="heading">Courses Enrolled In</h1>
       <div className="flex-row">
         {courses.length &&
-          courses.map((course) => <Course key={course.id} course={course} />)}
+          courses.map((course) => {
+            const duration = course.duration.split(" ")[0];
+            const newDate = new Date();
+            newDate.setDate(newDate.getDate() + +duration * 7);
+            return (
+              <EnhancedCourse
+                key={course.id}
+                course={course}
+                dueDate={newDate.toDateString()}
+              />
+            );
+          })}
       </div>
     </div>
   );
